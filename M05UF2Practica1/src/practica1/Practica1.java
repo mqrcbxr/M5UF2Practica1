@@ -20,45 +20,17 @@ public class Practica1 {
         Scanner sc = new Scanner(System.in);
         double res = 0;
         String operacion;
+        String numero1;
+        String numero2;
         boolean comprobar = false;
 
         do {
 
-            String numero1;
-            do {
-                System.out.print("Introdueix el primer numero: ");
-                numero1 = sc.nextLine();
-                System.out.println();
-            } while (!numero1.matches("[+-]?[\\d]*[.]?[\\d]+"));
-            double n1 = Double.parseDouble(numero1);
-       
+            Double n1 = obtenerNumero(sc);
+            
+            operacion = obtenerOperacion(sc);
 
-            do {
-                System.out.println("\nOperació? (Indica el signe)");
-                System.out.println("+ = sumar");
-                System.out.println("- = restar");
-                System.out.println("x = multiplicar");
-                System.out.println("/ = dividir");
-                System.out.println("* = elevar primer num al segon num");
-                System.out.println("% = residu");
-                operacion = sc.nextLine();
-                if (operacion.equals("+") || operacion.equals("-") || operacion.equals("x")
-                        || operacion.equals("X") || operacion.equals("/") || operacion.equals("%")
-                        || operacion.equals("*")) {
-                    comprobar = true;
-                } else {
-                    comprobar = false;
-                    System.err.println("Operació no vàlida. Intenta-ho de nou.");
-                }
-            } while (comprobar != true);
-
-            String numero2;
-            do {
-                System.out.print("\n Introdueix el segon numero: ");
-                numero2 = sc.nextLine();
-                System.out.println();
-            } while (!numero2.matches("[+-]?[\\d]*[.]?[\\d]+"));
-            double n2 = Double.parseDouble(numero2);
+            Double n2 = obtenerNumero(sc);
 
             do {
                 comprobar = true;
@@ -114,4 +86,35 @@ public class Practica1 {
             } while (!comprobar);
         } while (operacion.equalsIgnoreCase("s"));
     }
+    
+    public static double obtenerNumero(Scanner sc) {
+        String numero;
+        double num;
+        do {
+            System.out.print("Introdueix el primer numero: ");
+            numero = sc.nextLine();
+            System.out.println();
+        } while (!numero.matches("[+-]?[\\d]*[.]?[\\d]+"));
+        return Double.parseDouble(numero);
+    }
+    
+    public static String obtenerOperacion(Scanner sc) {
+        String operacion;
+        boolean comprobar;
+        do {
+            System.out.println("\nOperació? (Indica el signe)");
+            System.out.println("+ = sumar");
+            System.out.println("- = restar");
+            System.out.println("x = multiplicar");
+            System.out.println("/ = dividir");
+            System.out.println("* = elevar primer num al segon num");
+            System.out.println("% = residu");
+            operacion = sc.nextLine();
+            comprobar = operacion.matches("[+\\-xX/*%]");
+            if (!comprobar) {
+                System.err.println("Operació no vàlida. Intenta-ho de nou.");
+            }
+        } while (!comprobar);
+        return operacion;
+    } 
 }
